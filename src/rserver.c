@@ -15,6 +15,8 @@
 
 #endif
 
+#include <rparser.h>
+
 DWORD WINAPI ClientThread(LPVOID param) {
 
         SOCKET ClientSocket = (SOCKET)(UINT_PTR)param;
@@ -28,8 +30,7 @@ DWORD WINAPI ClientThread(LPVOID param) {
 
         if (received > 0) {
             request[received] = '\0';
-
-            printf("\nRequest Received ->\n%s\n", request);
+            ParsedRequest parsedRequest = parseRequest(request);
 
         } else if (received == SOCKET_ERROR) {
             printf("recv failed: %d\n", WSAGetLastError());
