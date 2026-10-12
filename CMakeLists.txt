@@ -5,7 +5,7 @@ find_package(Threads REQUIRED)
 
 add_executable(cdis
     src/main.c
-    src/utils.c
+    src/rparser.c
     src/rserver.c
 )
 
