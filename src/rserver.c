@@ -30,7 +30,7 @@ DWORD WINAPI ClientThread(LPVOID param) {
 
         if (received > 0) {
             request[received] = '\0';
-            ParsedRequest parsedRequest = parseRequest(request);
+            printf("Request Recieved -> %s",request);
 
         } else if (received == SOCKET_ERROR) {
             printf("recv failed: %d\n", WSAGetLastError());
@@ -50,7 +50,7 @@ SOCKET InitServer() {
     iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
     if(iResult != 0) {
         printf("Winsock Failed to Initialize! : %d\n",iResult);
-        return 1;
+        return INVALID_SOCKET;
     }
 
     struct addrinfo *result = NULL, *ptr = NULL, hints;
@@ -64,7 +64,7 @@ SOCKET InitServer() {
     if (iResult != 0) {
         printf("Failed to Resolve Local Address and Port to be used by the server : %d\n", iResult);
         WSACleanup();
-        return 1;
+        return INVALID_SOCKET;
     }
 
     SOCKET ListenSocket = INVALID_SOCKET;
@@ -74,7 +74,7 @@ SOCKET InitServer() {
         printf("Error at socket(): %ld\n", WSAGetLastError());
         freeaddrinfo(result);
         WSACleanup();
-        return 1;
+        return INVALID_SOCKET;
     }
 
     iResult = bind( ListenSocket, result->ai_addr, (int)result->ai_addrlen);
@@ -83,7 +83,7 @@ SOCKET InitServer() {
         freeaddrinfo(result);
         closesocket(ListenSocket);
         WSACleanup();
-        return 1;
+        return INVALID_SOCKET;
     }
 
     freeaddrinfo(result);
@@ -94,6 +94,8 @@ SOCKET InitServer() {
         WSACleanup();
         return 1;
     }
+
+    printf("Server Listening on PORT:%s...",DEFAULT_PORT);
 
     return ListenSocket;
 
