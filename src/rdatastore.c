@@ -1,11 +1,11 @@
-#include <rdatastore.h>
 #include <stddef.h>
+#include <string.h>
+#include "rdatastore.h"
 
 void init_table() {
     for(int i = 0; i < MAX_TABLE_SIZE; i++) {
-        table[i] = NULL;
+        RDATASTORE[i] = NULL;
     }
-    return 0;
 }
 
 unsigned int hash(const char* key) {
