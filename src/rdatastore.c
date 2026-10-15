@@ -1,5 +1,12 @@
 #include <rdatastore.h>
+#include <stddef.h>
 
+void init_table() {
+    for(int i = 0; i < MAX_TABLE_SIZE; i++) {
+        table[i] = NULL;
+    }
+    return 0;
+}
 
 unsigned int hash(const char* key) {
     unsigned int key_len = strlen(key);

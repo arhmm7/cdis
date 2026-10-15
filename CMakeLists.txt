@@ -7,6 +7,7 @@ add_executable(cdis
     src/main.c
     src/rparser.c
     src/rserver.c
+    src/rdatastore.c
 )
 
 target_include_directories(cdis PRIVATE

@@ -21,19 +21,29 @@ DWORD WINAPI ClientThread(LPVOID param) {
 
         SOCKET ClientSocket = (SOCKET)(UINT_PTR)param;
         char request[BUFFER_SIZE];
-        int received = recv(
-            ClientSocket,
-            request,
-            sizeof(request) - 1,
-            0
-        );
+        int received;
 
-        if (received > 0) {
-            request[received] = '\0';
-            printf("Request Recieved -> %s",request);
+        while(1) {
 
-        } else if (received == SOCKET_ERROR) {
-            printf("recv failed: %d\n", WSAGetLastError());
+            received = recv(
+                ClientSocket,
+                request,
+                sizeof(request) - 1,
+                0
+            );
+
+            if (received > 0) {
+                request[received] = '\0';
+                printf("Request Recieved -> %s",request);
+
+            } else if (received == SOCKET_ERROR) {
+                printf("recv failed: %d\n", WSAGetLastError());
+                break;
+            } else if (received == 0) {
+                printf("Client disconnected.\n");
+                break;
+            }
+
         }
 
         shutdown(ClientSocket, SD_SEND);
