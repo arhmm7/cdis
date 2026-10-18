@@ -15,12 +15,11 @@
 #endif
 
 #include "rserver.h"
-#include "rparser.h"
-
 
 int main(int argc, char **argv) {
 
     SOCKET ListenSocket = InitServer();
     RunServer(&ListenSocket);
     return 0;
+
 }

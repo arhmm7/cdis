@@ -2,6 +2,8 @@
 #include <string.h>
 #include "rdatastore.h"
 
+char* RDATASTORE[MAX_TABLE_SIZE];
+
 void init_table() {
     for(int i = 0; i < MAX_TABLE_SIZE; i++) {
         RDATASTORE[i] = NULL;
